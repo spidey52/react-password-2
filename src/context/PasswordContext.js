@@ -37,6 +37,7 @@ const PasswordContextProvider = ({ children }) => {
   }, [isAuthenticated.token]);
 
   const editPass = async (pass) => {
+    setIsLoading(true);
     await axios.patch(`${apiAddress}/passwds`, pass, {
       headers: { Authorization: `Bearer ${isAuthenticated.token}` },
     });
@@ -44,6 +45,7 @@ const PasswordContextProvider = ({ children }) => {
   };
 
   const deletePass = async (id) => {
+    setIsLoading(true);
     await axios.delete(`${apiAddress}/passwds/${id}`, {
       headers: { Authorization: `Bearer ${isAuthenticated.token}` },
     });
@@ -51,6 +53,7 @@ const PasswordContextProvider = ({ children }) => {
   };
 
   const addPass = async (pass) => {
+    setIsLoading(true);
     await axios.post(`${apiAddress}/passwds`, pass, {
       headers: { Authorization: `Bearer ${isAuthenticated.token}` },
     });

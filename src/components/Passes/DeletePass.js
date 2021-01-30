@@ -4,10 +4,10 @@ import { PasswordContext } from "../../context/PasswordContext";
 
 const Delete = ({ match }) => {
   const history = useHistory();
-  const { deletePass } = useContext(PasswordContext);
+  const { deletePass, isLoading } = useContext(PasswordContext);
 
   const deleteHandler = async () => {
-    deletePass(match.params.id);
+    await deletePass(match.params.id);
     history.push("/passes");
   };
 
@@ -21,7 +21,7 @@ const Delete = ({ match }) => {
       }}
     >
       <button onClick={deleteHandler} className="btn btn-danger mx-3">
-        Yes, delete
+        {isLoading ? "deleting" : "Yes, delete"}
       </button>
 
       <Link to="/passes" className="btn btn-primary">

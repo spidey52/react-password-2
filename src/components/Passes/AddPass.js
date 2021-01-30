@@ -17,7 +17,7 @@ const AddPass = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { addPass } = useContext(PasswordContext);
+  const { addPass, isLoading } = useContext(PasswordContext);
   const history = useHistory();
 
   const submitHandler = async (e) => {
@@ -61,7 +61,9 @@ const AddPass = () => {
           setValue={setPassword}
         />
         {/* <Input type="submit" className="btn btn-primary" /> */}
-        <button className="btn btn-primary">submit</button>
+        <button className="btn btn-primary">
+          {isLoading ? "adding" : "submit"}
+        </button>
       </form>
     </div>
   );
