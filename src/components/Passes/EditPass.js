@@ -22,7 +22,7 @@ const Edit = ({ match }) => {
 
   const history = useHistory();
 
-  const { getPassById, editPass, isLoading, passes } = useContext(
+  const { getPassById, editPass, isLoading } = useContext(
     PasswordContext
   );
 
