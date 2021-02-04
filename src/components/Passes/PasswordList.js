@@ -2,6 +2,16 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { PasswordContext } from "../../context/PasswordContext";
 import PasswordOne from "./PasswordOne";
 
+const debounce = (fn, timer) => {
+  let timeoutId;
+  return function (...args) {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn(...args);
+    }, timer);
+  };
+};
+
 const PasswordList = () => {
   const { isLoading, passes } = useContext(PasswordContext);
 
@@ -10,8 +20,12 @@ const PasswordList = () => {
   const search = useRef();
 
   const handleFilter = (e) => {
-    // FIXME: if filter is from api apply debounce here
-    setData(passes.filter((pass) => pass.name.includes(e.target.value)));
+    console.log('fired')
+    setData(
+      passes.filter((elem) =>
+        elem.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
   };
 
   useEffect(() => {
@@ -26,7 +40,7 @@ const PasswordList = () => {
           type="text"
           placeholder="search"
           ref={search}
-          onChange={handleFilter}
+          onChange={debounce(handleFilter, 200)}
         />
       </div>
       <div className="wrapper">
