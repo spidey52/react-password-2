@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { PasswordContext } from "../../context/PasswordContext";
+import Loading from "../Loading";
 import PasswordOne from "./PasswordOne";
 
 const debounce = (fn, timer) => {
@@ -20,7 +21,7 @@ const PasswordList = () => {
   const search = useRef();
 
   const handleFilter = (e) => {
-    console.log('fired')
+    console.log("fired");
     setData(
       passes.filter((elem) =>
         elem.name.toLowerCase().includes(e.target.value.toLowerCase())
@@ -44,18 +45,20 @@ const PasswordList = () => {
         />
       </div>
       <div className="wrapper">
-        {isLoading
-          ? "loading"
-          : data.map((e) => (
-              <PasswordOne
-                title={e.name}
-                username={e.username}
-                password={e.password}
-                email={e.email}
-                key={e._id}
-                id={e._id}
-              />
-            ))}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          data.map((e) => (
+            <PasswordOne
+              title={e.name}
+              username={e.username}
+              password={e.password}
+              email={e.email}
+              key={e._id}
+              id={e._id}
+            />
+          ))
+        )}
       </div>
     </>
   );
