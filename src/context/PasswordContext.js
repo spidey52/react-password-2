@@ -25,7 +25,8 @@ const PasswordContextProvider = ({ children }) => {
   };
 
   const getPassById = (id) => {
-    return passes.find((pass) => pass._id === id);
+    const pass = passes.find((pass) => pass._id === id);
+    return pass;
   };
 
   useEffect(() => {

@@ -22,14 +22,16 @@ const Edit = ({ match }) => {
 
   const history = useHistory();
 
-  const { getPassById, editPass, isLoading } = useContext(PasswordContext);
+  const { getPassById, editPass, isLoading, passes } = useContext(
+    PasswordContext
+  );
 
   useEffect(() => {
-    const data = getPassById(match.params.id);
-    setUsername(data.username);
-    setPassword(data.password);
-    setEmail(data.email);
-    setTitle(data.name);
+    const data = getPassById(match.params.id) || {};
+    setUsername(data.username || "");
+    setPassword(data.password || "");
+    setEmail(data.email || "");
+    setTitle(data.name || "");
     return;
   }, [match.params.id, getPassById]);
 
