@@ -11,12 +11,15 @@ const PasswordContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchPasses = async () => {
-    setIsLoading(true);
+    if (passes.length === 0) {
+      setIsLoading(true);
+    }
     try {
       const { data } = await axios.get(`${apiAddress}/passwds`, {
         headers: { Authorization: `Bearer ${isAuthenticated.token}` },
       });
       setPasses(data);
+      localStorage.setItem("passes", JSON.stringify(data));
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -31,6 +34,7 @@ const PasswordContextProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("run here");
+    setPasses(JSON.parse(localStorage.getItem("passes")) || []);
     if (isAuthenticated.token) {
       fetchPasses();
     }
