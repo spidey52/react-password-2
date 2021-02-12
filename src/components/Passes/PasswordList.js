@@ -15,11 +15,8 @@ const debounce = (fn, timer) => {
 
 const PasswordList = () => {
   const { isLoading, passes } = useContext(PasswordContext);
-
   const [data, setData] = useState([]);
-
   const search = useRef();
-
   const handleFilter = (e) => {
     console.log("fired");
     setData(
