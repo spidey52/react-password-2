@@ -1,0 +1,24 @@
+.hello {
+  position: fixed;
+  width: 100%;
+  top: 24px;
+  left: -24px;
+  transition: all 0.1s ease-in;
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hello > h2 {
+  color: white;
+  background: rgb(255, 0, 0);
+  padding: 12px;
+  border-radius: 4px;
+  width: 250px;
+  letter-spacing: 1.25px;
+}
+
+.hidden {
+  transform: translateX(250px);
+  z-index: -100;
+}

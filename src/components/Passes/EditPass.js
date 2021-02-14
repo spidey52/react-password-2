@@ -22,9 +22,7 @@ const Edit = ({ match }) => {
 
   const history = useHistory();
 
-  const { getPassById, editPass, isLoading } = useContext(
-    PasswordContext
-  );
+  const { getPassById, editPass, isLoading } = useContext(PasswordContext);
 
   useEffect(() => {
     const data = getPassById(match.params.id) || {};
@@ -48,6 +46,8 @@ const Edit = ({ match }) => {
 
   return (
     <div style={style}>
+     
+
       <h2>Edit page is here</h2>
       <h4>{title}</h4>
       <form onSubmit={submitHandler}>
