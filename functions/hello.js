@@ -28,6 +28,10 @@ exports.handler = async (events, context, callback) => {
 
   return {
     statusCode: 200,
+    headers: {
+      /* Required for CORS support to work */
+      "Access-Control-Allow-Origin": "*",
+    },
     body: d,
   };
 };
