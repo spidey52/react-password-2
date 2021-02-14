@@ -2,11 +2,11 @@ exports.handler = async (events, context, callback) => {
   const crypto = require("crypto");
 
   const timeStart = Date.now();
-  const mykey = crypto.createCipheriv("aes-128-cbc", "mypassword");
+  const mykey = crypto.createCipher("aes-128-cbc", "mypassword");
   let encrypted = mykey.update("abc", "utf8", "hex");
   encrypted += mykey.final("hex");
 
-  const decryptKey = crypto.createDecipheriv("aes-128-cbc", "mypassword");
+  const decryptKey = crypto.createDecipher("aes-128-cbc", "mypassword");
   let decrypted = decryptKey.update(
     "34feb914c099df25794bf9ccb85bea72",
     "hex",
