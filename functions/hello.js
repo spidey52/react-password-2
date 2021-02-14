@@ -1,7 +1,7 @@
 exports.handler = async (events, context, callback) => {
   const crypto = require("crypto");
 
-  const timeStart = new Date.now();
+  const timeStart = Date.now();
   const mykey = crypto.createCipheriv("aes-128-cbc", "mypassword");
   let encrypted = mykey.update("abc", "utf8", "hex");
   encrypted += mykey.final("hex");
@@ -14,7 +14,7 @@ exports.handler = async (events, context, callback) => {
   );
   decrypted += mykey.final("utf8");
 
-  const timeEnd = new Date.now();
+  const timeEnd = Date.now();
   const timetaken = timeStart - timeEnd;
 
   return {
