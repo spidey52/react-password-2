@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const PasswordOne = ({ title, username, password, id }) => {
+const PasswordOne = ({ title, username, password, id, getDecryptPass }) => {
   const copyHandler = async () => {
     if (navigator) {
-      await navigator.clipboard.writeText(password);
+      let start = Date.now();
+      const pass = await getDecryptPass(password);
+      await navigator.clipboard.writeText(pass);
+      console.log(start - Date.now());
     }
     alert("copied to clipboard");
   };

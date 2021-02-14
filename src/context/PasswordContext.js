@@ -10,6 +10,14 @@ const PasswordContextProvider = ({ children }) => {
   const { isAuthenticated } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
+  const getDecryptPass = async (password) => {
+    const { data } = await axios.get("/.netlify/functions/hello", {
+      headers: { pass: password },
+    });
+
+    return data;
+  };
+
   const fetchPasses = async () => {
     if (passes.length === 0) {
       setIsLoading(true);
@@ -75,6 +83,7 @@ const PasswordContextProvider = ({ children }) => {
         addPass,
         getPassById,
         fetchPasses,
+        getDecryptPass,
       }}
     >
       {children}
