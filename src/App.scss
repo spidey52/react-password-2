@@ -94,6 +94,20 @@ nav {
     color: rgb(188, 188, 233);
   }
 }
+@media only screen and (max-width: 768px) {
+  nav {
+    height: 3rem;
+
+    .nav-brand {
+      font-size: 24px;
+      margin: 0 10px;
+    }
+
+    ul {
+      font-size: 0.8rem;
+    }
+  }
+}
 
 .search-container {
   width: 100%;
