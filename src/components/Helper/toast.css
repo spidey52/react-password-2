@@ -1,12 +1,9 @@
 .hello {
   position: fixed;
-  width: 100%;
   top: 24px;
-  left: -24px;
-  transition: all 0.1s ease-in;
+  right: 0px;
+  transition: transform 0.1s ease-in;
   text-align: center;
-  display: flex;
-  justify-content: flex-end;
 }
 
 .hello > h2 {
@@ -19,6 +16,5 @@
 }
 
 .hidden {
-  transform: translateX(250px);
-  z-index: -100;
+  transform: translateX(400px);
 }
