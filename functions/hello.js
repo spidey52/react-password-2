@@ -1,8 +1,8 @@
 exports.handler = async (events, context, callback) => {
-  console.log('rech here')
+  console.log("rech here");
   const crypto = require("crypto");
 
-  console.log(events.headers)
+  console.log(events.headers);
 
   const epass = Buffer.from(events.headers.pass, "base64").toString("ascii");
   const pass = JSON.parse(epass);
@@ -30,7 +30,6 @@ exports.handler = async (events, context, callback) => {
   const d = decrypt(pass);
 
   return {
-    statusCode: "200",
     body: JSON.stringify(d),
   };
 };
