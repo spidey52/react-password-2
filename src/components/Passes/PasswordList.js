@@ -31,9 +31,19 @@ const PasswordList = () => {
     setData(passes);
   }, [passes]);
 
+  const downloadOption = () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)]), {
+      type: "text/plain",
+    });
+    a.setAttribute("download", "password.json");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <>
-      
       <div className="search-container">
         <input
           type="text"
@@ -42,6 +52,14 @@ const PasswordList = () => {
           onChange={debounce(handleFilter, 200)}
         />
       </div>
+
+      <button
+        onClick={downloadOption}
+        style={{ padding: "4px", margin: "10px" }}
+      >
+        download as json
+      </button>
+
       <div className="wrapper">
         {isLoading ? (
           <Loading />
