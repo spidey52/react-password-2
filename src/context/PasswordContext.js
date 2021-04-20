@@ -18,6 +18,12 @@ const PasswordContextProvider = ({ children }) => {
     return data;
   };
 
+  const addClicks = async (id) => {
+    await axios.get(`${apiAddress}/passwds/${id}/clicks`,
+      { headers: { Authorization: `Bearer ${isAuthenticated.token}` } },
+    )
+  }
+
   const fetchPasses = async () => {
     if (passes.length === 0) {
       setIsLoading(true);
@@ -84,6 +90,7 @@ const PasswordContextProvider = ({ children }) => {
         getPassById,
         fetchPasses,
         getDecryptPass,
+        addClicks
       }}
     >
       {children}

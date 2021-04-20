@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Toast from "../Helper/Toast";
 
-const PasswordOne = ({ title, username, password, id, getDecryptPass }) => {
+const PasswordOne = ({ title, username, password, id, getDecryptPass, addClicks }) => {
   const [visible, setVisible] = useState(false);
   const copyHandler = async () => {
     if (navigator) {
       const pass = await getDecryptPass(password);
       await navigator.clipboard.writeText(pass);
       setVisible(true);
+      await addClicks(id)
       setTimeout(() => setVisible(false), 2000);
     }
   };

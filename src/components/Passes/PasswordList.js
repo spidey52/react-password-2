@@ -14,7 +14,7 @@ const debounce = (fn, timer) => {
 };
 
 const PasswordList = () => {
-  const { isLoading, passes, getDecryptPass } = useContext(PasswordContext);
+  const { isLoading, passes, getDecryptPass, addClicks } = useContext(PasswordContext);
   const [data, setData] = useState([]);
   const search = useRef();
   const handleFilter = (e) => {
@@ -71,6 +71,7 @@ const PasswordList = () => {
               password={e.password}
               email={e.email}
               key={e._id}
+              addClicks={addClicks}
               id={e._id}
               getDecryptPass={getDecryptPass}
             />
