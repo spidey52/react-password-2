@@ -7,6 +7,7 @@ export const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState("");
   const [loading, setLogging] = useState(false);
+  const [error, setError] = useState(null)
 
   const logout = async () => {
     setLogging(true);
@@ -21,6 +22,7 @@ const UserContextProvider = ({ children }) => {
 
   const login = async ({ username, password }) => {
     setLogging(true);
+    setError(null)
     try {
       const { data } = await axios.post(`${apiAddress}/users/login`, {
         email: username,
@@ -30,10 +32,25 @@ const UserContextProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       console.log(error.message);
+      setError(error.message)
     } finally {
       setLogging(false);
     }
   };
+
+  const register = async ({ username, password, firstName, lastName, email }) => {
+    setLogging(true)
+    setError(null)
+    try {
+      const { data } = await axios.post(`${apiAddress}/users`, { email, username, password, firstName, lastName })
+      setIsAuthenticated(data);
+      localStorage.setItem("user", JSON.stringify(data));
+    } catch (error) {
+      console.log(error.response.data)
+      setError(error.message);
+    }
+
+  }
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -41,10 +58,14 @@ const UserContextProvider = ({ children }) => {
       setIsAuthenticated(JSON.parse(user));
     } else {
     }
+    return () => {
+      setLogging(false);
+      setError(false);
+    }
   }, []);
 
   return (
-    <UserContext.Provider value={{ isAuthenticated, loading, logout, login }}>
+    <UserContext.Provider value={{ isAuthenticated, loading, logout, login, register, error }}>
       {children}
     </UserContext.Provider>
   );

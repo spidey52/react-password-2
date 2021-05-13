@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Input from "./Helper/Input";
 
@@ -25,7 +25,7 @@ const Login = () => {
 
   return (
     <div style={{ maxWidth: "400px", margin: "0 auto" }}>
-      <br/>
+      <br />
       <h2>Login</h2>
       <form onSubmit={submitHandler}>
         <Input
@@ -49,6 +49,11 @@ const Login = () => {
           {loading ? "logging" : "login"}
         </button>
       </form>
+
+      <div className="content">
+        Not yet register.. <Link to="/register">register</Link>
+      </div>
+
     </div>
   );
 };

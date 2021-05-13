@@ -8,6 +8,7 @@ import Edit from "./components/Passes/EditPass";
 import Delete from "./components/Passes/DeletePass";
 import PasswordList from "./components/Passes/PasswordList";
 import AddPass from "./components/Passes/AddPass";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -61,6 +62,12 @@ function App() {
         <Route exact path="/login">
           <Login />
         </Route>
+        <Route exact path="/register">
+          <Register/>
+        </Route>
+
+
+
         <Route path="/some">
           <h1>dekho kya hota hai </h1>
         </Route>
