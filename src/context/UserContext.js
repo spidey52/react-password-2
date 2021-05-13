@@ -47,7 +47,11 @@ const UserContextProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       console.log(error.response.data)
-      setError(error.message);
+      if (error.response.data) {
+        setError(JSON.stringify(error.response.data));
+      } else {
+        setError(error.message)
+      }
     }
 
   }
