@@ -11,8 +11,9 @@ const PasswordContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getDecryptPass = async (password) => {
-    const { data } = await axios.get("/.netlify/functions/hello", {
-      headers: { pass: password },
+    // const { data } = await axios.get("/.netlify/functions/hello", {
+    const { data } = await axios.get(`${apiAddress}/passwds/copy`, {
+      headers: { pass: password, Authorization: `Bearer ${isAuthenticated.token}` },
     });
 
     return data;
