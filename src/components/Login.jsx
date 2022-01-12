@@ -19,6 +19,11 @@ const Login = () => {
     await login({ username, password });
   };
 
+  const handleTestUser = () => {
+    setPassword('testpassword')
+    setUsername('testuser');
+  }
+
   useEffect(() => {
     if (isAuthenticated) return history.push(redirect);
   });
@@ -53,6 +58,12 @@ const Login = () => {
 
       <div className="content">
         Not yet register.. <Link to="/register">register</Link>
+      </div>
+
+      <div className="testuser" onClick={handleTestUser}>
+        <button>
+          login as test user
+        </button>
       </div>
 
     </div>
