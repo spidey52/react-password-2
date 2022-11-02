@@ -1,3 +1,6 @@
+import { Box, Button, Paper, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Stack } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -29,44 +32,53 @@ const Login = () => {
   });
 
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto" }}>
-      <br />
-      <h2>Login</h2>
+    <Box sx={{ mx: 'auto', my: 4, elevation: 3, p: 2, maxWidth: "400px" }} component={Paper}>
+      {/* <h2>Login</h2> */}
+      <Typography variant="h5" sx={{ textTransform: "uppercase", textAlign: 'center ' }} gutterBottom>
+        Login
+      </Typography>
       <form onSubmit={submitHandler}>
-        <Input
-          value={username}
-          setValue={setUsername}
-          type="text"
-          placeholder="username"
-          label="username"
-          required={true}
-        />
-        <Link to="/forget-password" style={{ float: "right" }}>forgot password</Link>
-        <Input
-          type="password"
-          value={password}
-          setValue={setPassword}
-          placeholder="password"
-          label="password"
-          required={true}
-        />
+        <Stack spacing={1}>
+          <Input
+            value={username}
+            setValue={setUsername}
+            type="text"
+            placeholder="username"
+            label="username"
+            required={true}
+          />
+          {/* <Link to="/forget-password" style={{ float: "right" }}>forgot password</Link> */}
+          <Input
+            type="password"
+            value={password}
+            setValue={setPassword}
+            placeholder="password"
+            label="password"
+            required={true}
+          />
 
-        <button className="btn btn-primary">
-          {loading ? "logging" : "login"}
-        </button>
+          <LoadingButton onClick={submitHandler} variant="contained" loading={loading} >login</LoadingButton>
+        </Stack>
       </form>
 
-      <div className="content">
-        Not yet register.. <Link to="/register">register</Link>
-      </div>
+      <Typography variant="body2" sx={{ textAlign: 'center', mt: 2 }}> Don't have an account? <Link to="/register">Signup</Link></Typography>
 
-      <div className="testuser" onClick={handleTestUser}>
+      {/* <Typography variant="body2" sx={{ textAlign: "center" }} gutterBottom>  or  </Typography>
+
+      <Button fullWidth color="info" LinkComponent={Link} variant="outlined" to="/register">Register</Button> */}
+
+      {/* Not yet register.. <Link to="/register">register</Link> */}
+      {/* <div className="content">
+        Not yet register.. <Link to="/register">register</Link>
+      </div> */}
+
+      {/* <div className="testuser" onClick={handleTestUser}>
         <button>
           login as test user
         </button>
-      </div>
+      </div> */}
 
-    </div>
+    </Box>
   );
 };
 

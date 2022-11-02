@@ -11,13 +11,20 @@ const UserContextProvider = ({ children }) => {
 
   const logout = async () => {
     setLogging(true);
-    await axios.post(
-      `${apiAddress}/users/logout`,
-      {},
-      { headers: { Authorization: `Bearer ${isAuthenticated.token}` } }
-    );
-    localStorage.removeItem("user");
-    setIsAuthenticated("");
+    try {
+      await axios.post(
+        `${apiAddress}/users/logout`,
+        {},
+        { headers: { Authorization: `Bearer ${isAuthenticated.token}` } }
+      );
+      localStorage.removeItem("user");
+      setIsAuthenticated("");
+    } catch (error) {
+      // setLogging(true);
+      alert(error.message);
+    } finally {
+      setLogging(false);
+    }
   };
 
   const login = async ({ username, password }) => {
@@ -28,10 +35,12 @@ const UserContextProvider = ({ children }) => {
         email: username,
         password,
       });
+      setLogging(false);
       setIsAuthenticated(data);
       localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
       console.log(error.message);
+      setLogging(false);
       setError(error.message)
     } finally {
       setLogging(false);

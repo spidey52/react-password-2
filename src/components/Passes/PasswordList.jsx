@@ -1,3 +1,5 @@
+import { DownhillSkiing, Download, Save } from "@mui/icons-material";
+import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
 import { PasswordContext } from "../../context/PasswordContext";
 import Loading from "../Loading";
@@ -44,21 +46,11 @@ const PasswordList = () => {
 
   return (
     <>
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="search"
-          ref={search}
-          onChange={debounce(handleFilter, 200)}
-        />
-      </div>
+      <Box className="search-container">
+        <TextField  size="small" fullWidth label="search" placeholder="type some key" ref={search} variant="outlined" onChange={debounce(handleFilter, 200)} />
+        <Button variant="contained" sx={{mt: 1}}  onClick={downloadOption} endIcon={<Download />}>Download </Button>
+      </Box>
 
-      <button
-        onClick={downloadOption}
-        style={{ padding: "4px", margin: "10px" }}
-      >
-        download as json
-      </button>
 
       <div className="wrapper">
         {isLoading ? (

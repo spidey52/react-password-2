@@ -1,17 +1,12 @@
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Paper, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { PasswordContext } from "../../context/PasswordContext";
 import Input from "../Helper/Input";
 
 const AddPass = () => {
-  const style = {
-    margin: "2rem auto",
-    padding: "1rem",
-    maxWidth: "400px",
-    borderRadius: "4px",
-    boxShadow: "0 0 0  0.5rem #eee",
-  };
-
   const [title, setTitle] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,13 +17,15 @@ const AddPass = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await addPass({ name: title, username, email, password });
-    history.push("/passes");
+    const result = await addPass({ name: title, username, email, password });
+    if (result) history.push("/passes");
+    else alert("Something went wrong");
   };
 
   return (
-    <div style={style}>
-      <form onSubmit={submitHandler}>
+    <Box sx={{ p: 2, mx: "auto", my: 3, maxWidth: "400px" }} component={Paper} >
+      <Typography variant="h6" sx={{ textTransform: "uppercase", textAlign: 'center', pb: 1 }}>Add New Entry</Typography>
+      <Stack spacing={1}>
         <Input
           value={title}
           setValue={setTitle}
@@ -60,12 +57,9 @@ const AddPass = () => {
           value={password}
           setValue={setPassword}
         />
-        {/* <Input type="submit" className="btn btn-primary" /> */}
-        <button className="btn btn-primary">
-          {isLoading ? "adding" : "submit"}
-        </button>
-      </form>
-    </div>
+        <LoadingButton onClick={submitHandler} loading={isLoading} variant="contained">add password</LoadingButton>
+      </Stack>
+    </Box>
   );
 };
 

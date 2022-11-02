@@ -1,3 +1,6 @@
+import { LoadingButton } from "@mui/lab";
+import { Paper, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { PasswordContext } from "../../context/PasswordContext";
@@ -31,26 +34,27 @@ const Edit = ({ match }) => {
     setEmail(data.email || "");
     setTitle(data.name || "");
     return;
-  }, [match.params.id, getPassById]);
+  }, [match.params.id, ]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await editPass({
+    let result = await editPass({
       username,
       email,
       password,
       _id: match.params.id,
     });
-    history.push("/passes");
+    console.log(result)
+    if (result) history.push("/passes");
+    else alert("Something went wrong");
   };
 
   return (
-    <div style={style}>
-     
-
-      <h2>Edit page is here</h2>
-      <h4>{title}</h4>
-      <form onSubmit={submitHandler}>
+    <Box sx={{ maxWidth: "400px", mx: "auto", my: 3, p: 2 }} component={Paper}>
+      {/* <Typography sx={{textAlign: 'center', tex}} variant="h6">Edit page is here</Typography> */}
+      <Typography sx={{ textAlign: 'center', textTransform: "uppercase", mb: 2 }} variant="h6"> edit {title} details</Typography>
+      {/* <h4>{title}</h4> */}
+      <Stack spacing={1.5}>
         <Input
           placeholder="username"
           label="username:"
@@ -75,11 +79,16 @@ const Edit = ({ match }) => {
           value={password}
           setValue={setPassword}
         />
-        <button className="btn btn-primary" disabled={isLoading}>
+        {/* <button className="btn btn-primary" disabled={isLoading}>
           {isLoading ? "editing" : "submit"}
-        </button>
-      </form>
-    </div>
+        </button> */}
+
+        <LoadingButton loading={isLoading} onClick={submitHandler} variant="contained">
+          edit password
+        </LoadingButton>
+
+      </Stack>
+    </Box>
   );
 };
 

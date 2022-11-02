@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Toast from "../Helper/Toast";
+import { toast } from 'react-toastify'
 
 const PasswordOne = ({ title, username, password, id, getDecryptPass, addClicks }) => {
-  const [visible, setVisible] = useState(false);
   const copyHandler = async () => {
     if (navigator) {
       const pass = await getDecryptPass(password);
       await navigator.clipboard.writeText(pass);
-      setVisible(true);
+      toast.success('Password copied to clipboard')
       await addClicks(id)
-      setTimeout(() => setVisible(false), 2000);
     }
   };
 
   const copyUsername = async () => {
-    setVisible(true);
     if (navigator) await navigator.clipboard.writeText(username);
-    setTimeout(() => setVisible(false), 2000);
+    toast.success('Username copied to clipboard')
   };
 
   return (
     <>
-      <Toast visible={visible} message="copied" />
       <div className="card">
         <div className="card__header">{title}</div>
         <div className="card__body" onClick={copyUsername}>
