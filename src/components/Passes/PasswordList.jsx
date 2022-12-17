@@ -1,42 +1,37 @@
-import { ContentCopy, CopyAll, Delete, Download, Edit } from "@mui/icons-material";
-import { Container, Box, Button, CircularProgress, Paper, Stack, TextField, Typography, Icon, IconButton, Modal } from "@mui/material";
+import { Download } from "@mui/icons-material";
+import { Container, Box, Paper, Stack, TextField, Typography, Icon, IconButton, Modal } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { setSearch } from "../../store/user_slice";
-import { getDecryptPass } from "../api/auth";
 import { usePassworListdHook } from "../api/usePasswordHook";
 import TableData from "../TaleData";
 import DeletePassword from "./DeletePassword";
 import EditPassword from "./EditPassword";
+import RenderPassword from "./helpers/RenderPassword";
+import PasswordOne from "./PasswordOne";
 
 const columns = [
   // { field: 'id', headerName: 'ID', flex: 1 },
-  { field: 'name', headerName: 'Name', flex: 1, renderCell: ({ value }) => <Typography variant="button" sx={{ fontWeight: "bold" }} color="primary" >{value}</Typography> },
-  { field: 'username', headerName: 'Username', flex: 1, },
-  { field: 'email', headerName: 'Email', flex: 1, },
-  { field: 'clicks', headerName: 'click', width: 80 , },
-  { field: 'password', headerName: 'Password', width: 120, renderCell: ({ value }) => <RenderPassword value={value} /> },
-  { field: 'action', headerName: 'Action', flex: 1, renderCell: ({ value }) => <RenderAction value={value} /> }
+  {
+    field: 'name', headerName: 'Name', flex: 1,
+    minWidth: 180,
+    renderCell: ({ value }) => <Typography variant="button" sx={{ fontWeight: "bold" }} color="primary" >{value}</Typography>
+  },
+  { field: 'username', headerName: 'Username', flex: 1, minWidth: 180, },
+  { field: 'email', headerName: 'Email', flex: 1, minWidth: 180, },
+  { field: 'clicks', headerName: 'click', width: 80, },
+  {
+    field: 'password', headerName: 'Password', width: 120,
+    renderCell: ({ value }) => <RenderPassword value={value} />
+  },
+  {
+    field: 'action', headerName: 'Action', flex: 1,
+    minWidth: 180,
+    renderCell: ({ value }) => <RenderAction value={value} />
+  }
 ]
 
-const RenderPassword = ({ value }) => {
-  const { token } = useSelector(state => state.user)
 
-  const copyPassword = async () => {
-    const { data, error } = await getDecryptPass(value, token)
-    if (error) return toast.error(error)
-    try {
-      await navigator.clipboard.writeText(data)
-      toast.success('Password copied Successfully')
-    } catch (error) {
-      toast.error('Password copy failed' + error.message)
-    }
-  }
-  return (
-    <Button variant="contained" color="primary" size="small" startIcon={<ContentCopy />} onClick={copyPassword} >copy</Button>
-  )
-}
 
 const RenderAction = ({ value }) => {
   return (
@@ -52,7 +47,6 @@ const Search = ({ }) => {
   const dispatch = useDispatch()
   const searchRef = useRef()
 
-
   useEffect(() => {
     let id = setTimeout(() => {
       dispatch(setSearch(value))
@@ -67,6 +61,7 @@ const Search = ({ }) => {
       console.log(e.key)
       if (e.key === 'Escape') {
         setValue('')
+        e.target.blur()
       }
       if (e.key === '/') {
         if (value === '') {
