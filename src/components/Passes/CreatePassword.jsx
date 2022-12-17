@@ -29,7 +29,7 @@ const CreatePassword = () => {
 	return <>
 		<Button color="inherit" size="small" onClick={toggle} >Add Password </Button>
 		<Modal open={open} onClose={toggle} keepMounted={true}>
-			<Box sx={{ ...modalStyle, p: 4, minWidth: 500 }} component={Paper}>
+			<Box sx={{ ...modalStyle, p: 4, width: 500, maxWidth: "95vw" }} component={Paper}>
 				<Box sx={{ pb: 1 }}>
 					<Typography variant="h6" component="h2" >ADD PASSWORD</Typography>
 

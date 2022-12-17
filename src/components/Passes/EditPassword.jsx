@@ -28,7 +28,7 @@ const EditPassword = ({ el }) => {
 		<>
 			<Button variant="contained" color="success" size="small" onClick={toggle}>Edit</Button>
 			<Modal open={open} onClose={toggle} >
-				<Box sx={{ ...modalStyle, p: 4, minWidth: 500 }} component={Paper}>
+				<Box sx={{ ...modalStyle, p: 4, width: 500, maxWidth: "95vw" }} component={Paper}>
 					<Box sx={{ pb: 1 }}>
 						<Typography variant="h6" component="h2" >EDIT PASSWORD</Typography>
 					</Box>
