@@ -17,7 +17,7 @@ const TableData = ({ isLoading, isRefetching, data, columns, rows, myheight }) =
 				disableSelectionOnClick
 				disableVirtualization
 				pageSize={pageSize}
-				onPageChange={(newPage) => setPageSize(newPage)} // setPageSize(newPage)
+				onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
 				rowsPerPageOptions={[10, 15, 20, 50, 100]}
 				sx={{
 					height: myheight || height,
