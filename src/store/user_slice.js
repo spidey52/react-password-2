@@ -7,6 +7,7 @@ const initialState = {
  token: token ? token : "",
  login_loading: false,
  login_error: "",
+ search: "",
 };
 
 export const userSlice = createSlice({
@@ -18,13 +19,16 @@ export const userSlice = createSlice({
   },
   login: (state, action) => {
    localStorage.setItem("token", JSON.stringify(action.payload.token));
-	 localStorage.setItem("user", JSON.stringify(action.payload.user));
+   localStorage.setItem("user", JSON.stringify(action.payload.user));
    state.token = action.payload.token;
    state.user = action.payload.user;
+  },
+  setSearch: (state, action) => {
+   state.search = action.payload;
   },
  },
 });
 
-export const { loginLoading, login } = userSlice.actions;
+export const { loginLoading, login, setSearch } = userSlice.actions;
 
 export default userSlice.reducer;

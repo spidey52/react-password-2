@@ -1,9 +1,7 @@
 import React from "react";
-import { Button, Divider, Modal, Paper, Stack, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Button, Divider, Modal, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { handleError, modalStyle } from "../utils";
-import { Add, HorizontalRule } from "@mui/icons-material";
 import { usePasswordCreateHook } from "../api/usePasswordHook";
 import { toast } from "react-toastify";
 
@@ -19,7 +17,10 @@ const CreatePassword = () => {
 		try {
 			await mutateAsync({ name: title, username, email, password })
 			toast.success('Password added successfully')
+			setForm({ title: '', username: '', email: '', password: '' })
+			toggle();
 		} catch (error) {
+			console.log(error.message);
 			toast.error(error?.response?.data?.message || 'Something went wrong')
 		}
 	}

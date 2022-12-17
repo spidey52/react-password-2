@@ -1,6 +1,5 @@
 import axios from "axios";
-import React from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { password_list_url } from "../../config";
 
@@ -27,13 +26,15 @@ export const usePassworListdHook = () => {
 export const usePasswordCreateHook = () => {
   const { token } = useSelector((state) => state.user);
 
-  const createPassword = (password) => {
+  const createPassword = async (password) => {
     return axios.post(password_list_url, password, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
   }
+
+  const queryClient = useQueryClient()
 
   return useMutation(createPassword, {
     onSuccess: () => {
@@ -45,13 +46,19 @@ export const usePasswordCreateHook = () => {
 export const usePasswordUpdateHook = () => {
   const { token } = useSelector(state => state.user)
 
-  const updatePassword = (id, password,) => {
+  const updatePassword = ({ id, password }) => {
+    console.log(password)
     return axios.patch(`${password_list_url}/${id}`, password, {
       headers: {
         Authorization: "Bearer " + token,
       },
+      params: {
+        id: id
+      },
     });
   }
+
+  const queryClient = useQueryClient()
 
   return useMutation(updatePassword, {
     onSuccess: () => {
@@ -64,12 +71,13 @@ export const usePasswordDeleteHook = () => {
   const { token } = useSelector(state => state.user)
 
   const deletePassword = (id) => {
-    return axios.delete(`${password_list_url}/id`, {
+    return axios.delete(`${password_list_url}/${id}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
   }
+  const queryClient = useQueryClient()
 
   return useMutation(deletePassword, {
     onSuccess: () => {
@@ -77,3 +85,5 @@ export const usePasswordDeleteHook = () => {
     }
   })
 }
+
+
