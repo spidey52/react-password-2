@@ -39,6 +39,7 @@ const Search = ({ }) => {
 
 	return (
 		<TextField
+		fullWidth
 			autoFocus
 			inputRef={searchRef}
 			label="Search"

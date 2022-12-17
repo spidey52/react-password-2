@@ -1,12 +1,13 @@
 import { DataGrid } from '@mui/x-data-grid'
 import React, { useState } from 'react'
+import { useLocalStorage } from '../helperHooks/useHelperHook'
 
 
 
 const height = '80vh'
 
 const TableData = ({ isLoading, isRefetching, data, columns, rows, myheight }) => {
-	const [pageSize, setPageSize] = useState(15)
+	const [pageSize, setPageSize] = useLocalStorage({ key: 'pageSize', initialValue: 10 })
 
 	return (
 		<>

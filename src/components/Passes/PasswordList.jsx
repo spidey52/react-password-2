@@ -1,7 +1,8 @@
 import { Download } from "@mui/icons-material";
-import { Container, Box, Paper, Stack, TextField, Typography, Icon, IconButton, Modal } from "@mui/material";
+import { Container, Box, Paper, Stack, TextField, Typography, Icon, IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useDeviceDimension } from "../../helperHooks/useHelperHook";
 import { setSearch } from "../../store/user_slice";
 import { usePassworListdHook } from "../api/usePasswordHook";
 import TableData from "../TaleData";
@@ -46,7 +47,12 @@ const RenderAction = ({ value }) => {
 const PasswordList = () => {
   const { search } = useSelector(state => state.user);
   const { isLoading, data, } = usePassworListdHook()
+  const [width] = useDeviceDimension()
+
+  console.log(width)
   const handleFilter = (elem) => elem.name.toLowerCase().includes(search.toLowerCase())
+
+
 
   const downloadOption = () => {
     const a = document.createElement("a");
@@ -61,14 +67,20 @@ const PasswordList = () => {
   return (
     <Container sx={{ my: 2, p: 1 }} component={Paper}>
       <Box sx={{ py: 1, display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{}}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Password List</Typography>
-        </Box>
-        <Stack direction="row" spacing={1}>
+        {
+          width > 500 &&
+          <Box sx={{}}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Password List</Typography>
+          </Box>
+        }
+        <Stack direction="row" spacing={1} sx={{ flex: width < 500 ? "1" : "inherit" }}>
           <Search />
-          <IconButton onClick={downloadOption} color="primary">
-            <Download />
-          </IconButton>
+          {
+            width > 500 &&
+            <IconButton onClick={downloadOption} color="primary">
+              <Download />
+            </IconButton>
+          }
         </Stack>
       </Box>
 
