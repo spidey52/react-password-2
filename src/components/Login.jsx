@@ -3,11 +3,30 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
-import Input from "./Helper/Input";
+// import Input from "./Helper/Input";
 import { loginApi } from "./api/auth";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/user_slice";
+
+const Input = ({ type, value, setValue, placeholder, label, required }) => { 
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <Box sx={{ mr: 1, width: '100%' }}>
+        <label htmlFor={label}>{label}</label>
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={placeholder}
+          required={required}
+          id={label}
+          sx={{ width: '100%', border: 1, borderColor: 'grey.500', borderRadius: 1, p: 1, }}
+        />
+      </Box>
+    </Box>
+  )
+}
 
 const Login = () => {
   const [username, setUsername] = useState("");

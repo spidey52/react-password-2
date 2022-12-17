@@ -8,7 +8,7 @@ import TableData from "../TaleData";
 import DeletePassword from "./DeletePassword";
 import EditPassword from "./EditPassword";
 import RenderPassword from "./helpers/RenderPassword";
-import PasswordOne from "./PasswordOne";
+import Search from "./helpers/RenderSearch";
 
 const columns = [
   // { field: 'id', headerName: 'ID', flex: 1 },
@@ -42,53 +42,6 @@ const RenderAction = ({ value }) => {
   )
 }
 
-const Search = ({ }) => {
-  const [value, setValue] = useState('')
-  const dispatch = useDispatch()
-  const searchRef = useRef()
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      dispatch(setSearch(value))
-    }, 300)
-    return () => clearTimeout(id)
-  }, [value])
-
-
-  useEffect(() => {
-
-    const handleKeyDown = (e) => {
-      console.log(e.key)
-      if (e.key === 'Escape') {
-        setValue('')
-        e.target.blur()
-      }
-      if (e.key === '/') {
-        if (value === '') {
-          e.preventDefault()
-        }
-        searchRef.current.focus()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-
-  return (
-    <TextField
-      autoFocus
-      inputRef={searchRef}
-      label="Search"
-      variant="outlined"
-      size="small"
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      sx={{ width: '100%' }}
-    />
-  )
-}
 
 const PasswordList = () => {
   const { search } = useSelector(state => state.user);
@@ -107,7 +60,6 @@ const PasswordList = () => {
   };
   return (
     <Container sx={{ my: 2, p: 1 }} component={Paper}>
-
       <Box sx={{ py: 1, display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{}}>
           <Typography variant="h6" sx={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Password List</Typography>
