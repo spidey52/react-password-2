@@ -12,57 +12,57 @@ import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient()
+
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <ToastContainer theme="colored" />
 
       <Router>
         <NavBar />
-        <PasswordContextProvider>
-          <Switch>
-            <Route exact path="/">
+        <Switch>
+          <Route exact path="/">
+            <LoginRequired>
+              <PasswordList />
+            </LoginRequired>
+          </Route>
+
+          <Route exact path="/passes">
+            <LoginRequired>
+              <PasswordList />
+            </LoginRequired>
+          </Route>
+
+          <Route path="/passes/add">
+            <LoginRequired>
+              <AddPass />
+            </LoginRequired>
+          </Route>
+
+          <Route
+            exact
+            path="/passes/edit/:id"
+            render={(props) => (
               <LoginRequired>
-                <PasswordList />
+                <Edit {...props} />
               </LoginRequired>
-            </Route>
+            )}
+          />
 
-            <Route exact path="/passes">
+          <Route
+            exact
+            path="/passes/delete/:id"
+            render={(props) => (
               <LoginRequired>
-                <PasswordList />
+                <Delete {...props} />
               </LoginRequired>
-            </Route>
-
-            <Route path="/passes/add">
-              <LoginRequired>
-                <AddPass />
-              </LoginRequired>
-            </Route>
-
-            <Route
-              exact
-              path="/passes/edit/:id"
-              render={(props) => (
-                <LoginRequired>
-                  <Edit {...props} />
-                </LoginRequired>
-              )}
-            />
-
-            <Route
-              exact
-              path="/passes/delete/:id"
-              render={(props) => (
-                <LoginRequired>
-                  <Delete {...props} />
-                </LoginRequired>
-              )}
-            />
-          </Switch>
-        </PasswordContextProvider>
-
-        {/* https://stackoverflow.com/questions/50155909/how-to-use-context-api-with-react-router-v4 */}
+            )}
+          />
+        </Switch>
 
         <Switch>
           <Route exact path="/login">
@@ -83,7 +83,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </>
+    </QueryClientProvider>
   );
 }
 

@@ -1,60 +1,55 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { UserContext } from "../context/UserContext.jsx";
+import { AppBar, Avatar, Button, IconButton, Menu, Stack, Toolbar, Typography } from "@mui/material";
+import React from "react";
+import { LockOpenTwoTone } from "@mui/icons-material";
+import { Box } from "@mui/system";
+import { useSelector } from "react-redux";
+import CreatePassword from "./Passes/CreatePassword";
 
 const NavBar = () => {
-  const { isAuthenticated, logout } = useContext(UserContext);
+  const { isAuthenticated, user } = useSelector(state => state.user)
+  return <AppBar position="static">
+    <Toolbar>
+      <IconButton
+        size="large"
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        sx={{ mr: 2 }}
+      >
+        <LockOpenTwoTone />
+      </IconButton>
+      <Typography
+        variant="h6"
+        noWrap
+        component={Button}
+        sx={{
+          mr: 2,
+          display: { xs: 'none', md: 'flex' },
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          letterSpacing: '.05rem',
+          color: 'inherit',
+          textDecoration: 'none',
+        }}
+      >
+        PASSMANAGER
+      </Typography>
+      <Box sx={{ flexGrow: 1 }} >
+        <CreatePassword />
+      </Box>
 
-  return (
-    <nav>
-      <div className="nav-brand">PassManager</div>
-      <ul>
-        <Link to="/">
-          <li> Home </li>
-        </Link>
-        <Link to="/passes">
-          <li> passes </li>
-        </Link>
-
-        <Link to="/passes/add">
-          <li>add </li>
-        </Link>
-
-        {isAuthenticated ? (
-          <li onClick={logout}>logout</li>
-        ) : (
-          <Link to="/login">
-            <li> login </li>
-          </Link>
-        )}
-      </ul>
-    </nav>
-  );
+      {
+        !isAuthenticated ? <Button color="inherit">Login</Button> : <>
+          <Stack direction="row" spacing={0.25} alignItems="center">
+            <Avatar alt={user.username} src={user.avatar || "https://material-ui.com/static/images/avatar/1.jpg"} sx={{ height: "30px", width: "30px" }} />
+            <Button color="inherit"> {user.username} </Button>
+          </Stack>
+        </>
+      }
+    </Toolbar>
+  </AppBar>;
 };
 
-// const NavBar = () => {
-//   const themeContext = useContext(ThemeContext);
-//   const authContext = useContext(UserContext);
 
-//   const { isLightTheme, light, dark } = themeContext;
-//   const theme = isLightTheme ? light : dark;
-
-//   const { isAuthenticated, logout, loading } = authContext;
-
-//   return (
-//     <nav style={{ background: theme.ui, color: theme.syntax }}>
-//       <h1>Context App</h1>
-
-//       <button onClick={logout}>
-//         {isAuthenticated ? loading ? "logging out" : "Logged In" : "Logged out"}
-//       </button>
-//       <ul>
-//         <li>Home</li>
-//         <li>About</li>
-//         <li>Contact</li>
-//       </ul>
-//     </nav>
-//   );
-// };
 
 export default NavBar;

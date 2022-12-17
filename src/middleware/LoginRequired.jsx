@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const LoginRequired = ({ children}) => {
-  const { isAuthenticated } = useContext(UserContext);
+  const { isAuthenticated } = useSelector(state => state.user)
 
   const location = useLocation();
 

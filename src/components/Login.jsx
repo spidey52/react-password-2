@@ -1,15 +1,19 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Stack } from "@mui/system";
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import React, { useEffect, useState } from "react";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import Input from "./Helper/Input";
+import { loginApi } from "./api/auth";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/user_slice";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login, loading, isAuthenticated } = useContext(UserContext);
+  const dispatch = useDispatch()
+  const { isAuthenticated, login_loading: loading } = useSelector(state => state.user);
 
   const history = useHistory();
   const location = useLocation();
@@ -19,7 +23,10 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await login({ username, password });
+    const { data, error } = await loginApi({ username, password });
+    if (error) return toast.error(error);
+    toast.success("Login successfull");
+    dispatch(login(data))
   };
 
   const handleTestUser = () => {
@@ -28,8 +35,8 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (isAuthenticated) return history.push(redirect);
-  });
+    if(isAuthenticated) return history.push(redirect)
+  }, [isAuthenticated])
 
   return (
     <Box sx={{ mx: 'auto', my: 4, elevation: 3, p: 2, maxWidth: "400px" }} component={Paper}>
