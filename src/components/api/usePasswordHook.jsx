@@ -18,7 +18,6 @@ export const usePassworListdHook = () => {
     refetchOnWindowFocus: true,
     select: (res) => res.data,
     placeholderData: { data: [] },
-
   })
 };
 

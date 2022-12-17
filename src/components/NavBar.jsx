@@ -1,11 +1,15 @@
 import { AppBar, Avatar, Button, IconButton, Menu, Stack, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import { LockOpenTwoTone } from "@mui/icons-material";
+import { Brightness4, Brightness7, LockOpenTwoTone } from "@mui/icons-material";
 import { Box } from "@mui/system";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CreatePassword from "./Passes/CreatePassword";
+import { setTheme } from "../store/ui_slice";
 
 const NavBar = () => {
+  const { theme } = useSelector(state => state.ui)
+  const dispatch = useDispatch()
+
   const { isAuthenticated, user } = useSelector(state => state.user)
   return <AppBar position="static">
     <Toolbar>
@@ -38,14 +42,26 @@ const NavBar = () => {
         <CreatePassword />
       </Box>
 
-      {
-        !isAuthenticated ? <Button color="inherit">Login</Button> : <>
-          <Stack direction="row" spacing={0.25} alignItems="center">
-            <Avatar alt={user.username} src={user.avatar || "https://material-ui.com/static/images/avatar/1.jpg"} sx={{ height: "30px", width: "30px" }} />
-            <Button color="inherit"> {user.username} </Button>
-          </Stack>
-        </>
-      }
+
+      <Stack spacing={1} direction="row">
+        <IconButton
+          color="inherit"
+          onClick={() =>
+            dispatch(setTheme(theme === "light" ? "dark" : "light"))
+          }
+        >
+          {theme === "light" ? <Brightness4 /> : <Brightness7 />}
+        </IconButton>
+
+        {
+          !isAuthenticated ? <Button color="inherit">Login</Button> : <>
+            <Stack direction="row" spacing={0.25} alignItems="center">
+              <Avatar alt={user.username} src={user.avatar || "https://material-ui.com/static/images/avatar/1.jpg"} sx={{ height: "30px", width: "30px" }} />
+              <Button color="inherit"> {user.username} </Button>
+            </Stack>
+          </>
+        }
+      </Stack>
     </Toolbar>
   </AppBar>;
 };
