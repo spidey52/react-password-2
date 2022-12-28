@@ -49,11 +49,7 @@ const PasswordList = () => {
   const { isLoading, data, } = usePassworListdHook()
   const [width] = useDeviceDimension()
 
-  console.log(width)
   const handleFilter = (elem) => elem.name.toLowerCase().includes(search.toLowerCase())
-
-
-
   const downloadOption = () => {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)]), {
@@ -88,12 +84,12 @@ const PasswordList = () => {
       <TableData
         isLoading={isLoading}
         isRefetching={false}
-        data={data.filter(handleFilter).map((el, index) => ({
+        data={data?.filter(handleFilter).map((el, index) => ({
           ...el,
           count: index + 1,
           id: el._id,
           action: el,
-        }))}
+        })) || []}
         columns={columns}
       />
 

@@ -9,7 +9,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider } from "react-query";
-import {  useMemo } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 

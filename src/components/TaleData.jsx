@@ -19,7 +19,7 @@ const TableData = ({ isLoading, isRefetching, data, columns, rows, myheight }) =
 				disableVirtualization
 				pageSize={pageSize}
 				onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-				rowsPerPageOptions={[10, 15, 20, 50, 100]}
+				rowsPerPageOptions={[10, 25, 50, 100]}
 				sx={{
 					height: myheight || height,
 					maxHeight: "70vh",

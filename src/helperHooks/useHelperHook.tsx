@@ -16,7 +16,7 @@ export const useDeviceDimension = () => {
 	return [width, height];
 }
 
-export const useLocalStorage = (key: string, initialValue: any) => {
+export const useLocalStorage = ({key, initialValue}: any) => {
 	const [storedValue, setStoredValue] = useState(() => {
 		try {
 			const item = localStorage.getItem(key);

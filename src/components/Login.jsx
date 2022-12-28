@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/user_slice";
 
-const Input = ({ type, value, setValue, placeholder, label, required }) => { 
+const Input = ({ type, value, setValue, placeholder, label, required }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
       <Box sx={{ mr: 1, width: '100%' }}>
@@ -53,8 +53,12 @@ const Login = () => {
     setUsername('testuser');
   }
 
+
+
   useEffect(() => {
-    if(isAuthenticated) return history.push(redirect)
+    console.log('isAuthenticated', isAuthenticated)
+    if (isAuthenticated) return history.push(redirect)
+    
   }, [isAuthenticated])
 
   return (
